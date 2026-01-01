@@ -1,4 +1,4 @@
-CREATE OR REFRESH STREAMING TABLE bitz.bronze.saldo AS
+CREATE OR REFRESH STREAMING TABLE bitz.bronze.bronze_saldo AS
 SELECT
   *,
   _metadata.file_path           AS source_file,
