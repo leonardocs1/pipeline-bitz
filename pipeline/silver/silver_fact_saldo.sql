@@ -1,4 +1,4 @@
-CREATE OR REFRESH MATERIALIZED VIEW bitz.silver.silver_saldo
+CREATE OR REFRESH MATERIALIZED VIEW bitz.silver.silver_fact_saldo
 AS
 SELECT 
   id,
@@ -12,6 +12,6 @@ FROM (
       PARTITION BY descricao, data 
       ORDER BY data DESC NULLS LAST, ingestion_time DESC NULLS LAST
     ) AS rn
-  FROM bitz.bronze.bronze_saldo  
+  FROM bitz.bronze.fact_saldo
 )
 WHERE rn = 1;

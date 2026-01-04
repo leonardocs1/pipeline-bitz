@@ -1,4 +1,4 @@
-CREATE OR REFRESH MATERIALIZED VIEW bitz.silver.silver_dre 
+CREATE OR REFRESH MATERIALIZED VIEW bitz.silver.silver_fact_dre 
 AS
 SELECT
     _pk AS dre_sk,

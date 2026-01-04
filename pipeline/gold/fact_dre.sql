@@ -1,4 +1,4 @@
-CREATE OR REFRESH MATERIALIZED VIEW bitz.gold.gold_dre AS
+CREATE OR REFRESH MATERIALIZED VIEW bitz.gold.fact_dre AS
 
 SELECT
     t1.cod_filial,
@@ -13,6 +13,6 @@ SELECT
     t2.nivel_1,
     t2.nivel_2,
     t2.nivel_3
-FROM bitz.silver.silver_dre AS t1
+FROM bitz.silver.silver_fact_dre AS t1
 LEFT JOIN bitz.silver.dim_planos_dre AS t2
        ON t1.descricao = t2.nivel_3;
