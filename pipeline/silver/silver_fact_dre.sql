@@ -1,4 +1,4 @@
-CREATE OR REFRESH MATERIALIZED VIEW bitz.silver.silver_fact_dre 
+CREATE OR REFRESH LIVE TABLE bitz.silver.silver_fact_dre 
 PARTITIONED BY (ano_mes_conta)
 TBLPROPERTIES (
   'delta.autoOptimize.optimizeWrite' = 'true',
