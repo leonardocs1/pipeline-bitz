@@ -17,14 +17,13 @@ WITH t1 AS (
     FROM bitz.silver.silver_fact_dfc AS t1
     LEFT JOIN bitz.silver.dim_planos_dfc AS t2
         ON t1.descricao = t2.nivel_3
-    LEFT JOIN bitz.silver.dim_dfc_intermediario AS t3
 )
 
 SELECT
     t1.*,
     t2.nome AS intermediario
 FROM t1
-INNER JOIN bitz.silver.dim_dfc_intermediario AS t2
+LEFT JOIN bitz.silver.dim_dfc_intermediario AS t2
     ON t1.cod_raiz  = t2.cod_raiz
    AND t1.cod_grupo = t2.cod_grupo;
 
