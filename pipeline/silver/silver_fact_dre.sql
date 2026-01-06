@@ -33,5 +33,4 @@ SELECT
 
 FROM bitz.raw_gin_premier.dre AS t1
 LEFT JOIN bitz.silver.dim_normalizacao_descricao AS t2
-  ON UPPER(TRIM(t1.descricao)) = t2.descricao_original_upper
-WHERE t1.dtaconta IS NOT NULL;
+  ON UPPER(TRIM(t1.descricao)) = UPPER(t2.descricao_original)
