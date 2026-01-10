@@ -1,4 +1,4 @@
-CREATE OR REFRESH LIVE TABLE bitz.silver.silver_fact_contas_pagar_fcp
+CREATE OR REFRESH LIVE TABLE bitz.silver.fact_contas_receber_fcp
 PARTITIONED BY (ano_mes)
 TBLPROPERTIES (
   'delta.autoOptimize.optimizeWrite' = 'true',
@@ -15,11 +15,13 @@ SELECT
     CAST(id_empresa AS INT)                    AS id_empresa,
     CAST(id_codigo_plano AS INT)               AS id_codigo_plano,
     TRIM(UPPER(planoconta))                    AS planoconta,
-    CAST(id_fornecedor AS INT)                 AS id_cliente,
-    TRIM(UPPER(nome_fornecedor))               AS nome_cliente,
+    CAST(id_cliente AS INT)                    AS id_cliente,
+    TRIM(UPPER(nome_cliente))                  AS nome_cliente,
+    CAST(valor_doc AS DECIMAL(18, 2))          AS valor_doc,
+    CAST(valor_parc AS DECIMAL(18, 2))         AS valor_parc,
     CAST(valor AS DECIMAL(18, 2))              AS valor,
     CAST(valor_item_rateio AS DECIMAL(18, 2))  AS valor_item_rateio,
-    CAST(valor_pago AS DECIMAL(18, 2))             AS vlrpago,
+    CAST(vlrpago AS DECIMAL(18, 2))             AS vlrpago,
     CAST(vlr_pago_item_rateio AS DECIMAL(18, 2)) AS vlr_pago_item_rateio,
     CAST(nrodoc AS INT)                        AS nrodoc,
     TRIM(UPPER(historico))                     AS historico,
@@ -30,7 +32,7 @@ SELECT
     TRIM(UPPER(conta_baixa_descricao))         AS conta_baixa_descricao,
     CAST(_ingestion_timestamp AS TIMESTAMP)    AS ingestion_time,
     ano_mes
-FROM bitz.bronze.fact_contas_pagar_fcp
+FROM bitz.bronze.fact_contas_receber_fcp
 QUALIFY
     ROW_NUMBER() OVER (
         PARTITION BY

@@ -1,4 +1,4 @@
-CREATE OR REFRESH LIVE TABLE bitz.silver.silver_fact_saldo
+CREATE OR REFRESH LIVE TABLE bitz.silver.fact_saldo
 PARTITIONED BY (ano_mes)
 TBLPROPERTIES (
   'delta.autoOptimize.optimizeWrite' = 'true',
