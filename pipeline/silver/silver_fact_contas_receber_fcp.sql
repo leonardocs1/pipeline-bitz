@@ -42,3 +42,4 @@ QUALIFY
             dtavcto
         ORDER BY _ingestion_timestamp DESC
     ) = 1;
+    
