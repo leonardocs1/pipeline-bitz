@@ -13,6 +13,6 @@ SELECT
     t2.nivel_1,
     t2.nivel_2,
     t2.nivel_3
-FROM bitz.silver.silver_fact_dre AS t1
+FROM bitz.silver.fact_dre AS t1
 LEFT JOIN bitz.silver.dim_planos_dre AS t2
        ON t1.descricao = t2.nivel_3;
