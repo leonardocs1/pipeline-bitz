@@ -109,11 +109,11 @@ FROM STREAM read_files('/Volumes/bitz/raw/saldo', format => 'json')
 
 ```mermaid
 graph TD
-    A[FONTES DE DADOS<br/>API REST | Erathos Platform] --> B[RAW LAYER<br/>Unity Catalog Volumes JSON]
-    B --> C[BRONZE LAYER<br/>Streaming Tables DLT<br/>Padronização | Particionamento]
-    C --> D[SILVER LAYER<br/>Live Tables + Dimensions<br/>Star Schema | Deduplicação]
-    D --> E[GOLD LAYER<br/>Materialized Views<br/>Dados Consolidados para BI]
-    E --> F[CONSUMO<br/>BI / Analytics]
+    A["FONTES DE DADOS - API REST | Erathos Platform"] --> B["RAW LAYER - Unity Catalog Volumes JSON"]
+    B --> C["BRONZE LAYER - Streaming Tables DLT - Padronização | Particionamento"]
+    C --> D["SILVER LAYER - Live Tables + Dimensions - Star Schema | Deduplicação"]
+    D --> E["GOLD LAYER - Materialized Views - Dados Consolidados para BI"]
+    E --> F["CONSUMO - BI / Analytics"]
 ```
 
 ## 📂 Estrutura do Repositório
