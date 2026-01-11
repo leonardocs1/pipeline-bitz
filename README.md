@@ -1,4 +1,3 @@
-```markdown
 # Pipeline de Dados Financeiros | Databricks Data Lakehouse
 
 ## 📋 Contexto do Projeto
@@ -28,7 +27,7 @@ Pipeline de dados baseado em **arquitetura medalhão** (Medallion Architecture) 
 - Armazenamento em Unity Catalog Volumes (formato JSON)
 - Preservação de dados originais com metadados de rastreabilidade
 
-#### **Bronze Layer** 
+#### **Bronze Layer**
 - Streaming Tables para processamento contínuo e incremental
 - Padronização de schemas e tipos de dados
 - Particionamento por período (ano_mes) para otimização de queries
@@ -108,56 +107,20 @@ FROM STREAM read_files('/Volumes/bitz/raw/saldo', format => 'json')
 
 ## 📐 Arquitetura de Dados
 
-```
-┌──────────────────────────────────────────────────────────┐
-│                    FONTES DE DADOS                       │
-│              API REST  |  Erathos Platform               │
-└────────────────────────┬─────────────────────────────────┘
-                         │
-                         ▼
-┌──────────────────────────────────────────────────────────┐
-│                    RAW LAYER                             │
-│              Unity Catalog Volumes (JSON)                │
-│         Metadados: _ingestion_timestamp, etc.            │
-└────────────────────────┬─────────────────────────────────┘
-                         │
-                         ▼
-┌──────────────────────────────────────────────────────────┐
-│                  BRONZE LAYER                            │
-│              Streaming Tables (DLT)                      │
-│    • Padronização de schemas                             │
-│    • Particionamento por ano_mes                         │
-│    • Change Data Feed habilitado                         │
-└────────────────────────┬─────────────────────────────────┘
-                         │
-                         ▼
-┌──────────────────────────────────────────────────────────┐
-│                  SILVER LAYER                            │
-│              Live Tables + Dimensions                    │
-│    • Modelagem dimensional (Star Schema)                 │
-│    • Deduplicação e normalização                         │
-│    • Hierarquias de planos de contas                     │
-└────────────────────────┬─────────────────────────────────┘
-                         │
-                         ▼
-┌──────────────────────────────────────────────────────────┐
-│                   GOLD LAYER                             │
-│              Materialized Views                          │
-│    • Dados consolidados para BI                          │
-│    • Joins entre fatos e dimensões                       │
-└────────────────────────┬─────────────────────────────────┘
-                         │
-                         ▼
-┌──────────────────────────────────────────────────────────┐
-│              CONSUMO (BI / Analytics)                    │
-└──────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    A[FONTES DE DADOS<br/>API REST | Erathos Platform] --> B[RAW LAYER<br/>Unity Catalog Volumes JSON]
+    B --> C[BRONZE LAYER<br/>Streaming Tables DLT<br/>Padronização | Particionamento]
+    C --> D[SILVER LAYER<br/>Live Tables + Dimensions<br/>Star Schema | Deduplicação]
+    D --> E[GOLD LAYER<br/>Materialized Views<br/>Dados Consolidados para BI]
+    E --> F[CONSUMO<br/>BI / Analytics]
 ```
 
 ## 📂 Estrutura do Repositório
 
 ```
 pipeline-bitz/
-├── ingestao/                      # Módulos de ingestão
+├── ingestao/                    # Módulos de ingestão
 │   ├── get_saldo.ipynb           # Extração de saldos via API
 │   ├── get_pagar_receber.ipynb   # Extração contas pagar/receber
 │   ├── table_dfc_nivel_0.ipynb   # Processamento DFC (Erathos)
@@ -165,7 +128,7 @@ pipeline-bitz/
 │   ├── table_fcp_nivel_0.ipynb   # Processamento FCP (Erathos)
 │   └── table_dfc_intermediario.ipynb
 │
-├── pipeline/                      # Delta Live Tables (DLT)
+├── pipeline/                    # Delta Live Tables (DLT)
 │   ├── bronze/                   # Camada Bronze
 │   │   ├── fact_saldo.sql
 │   │   ├── fact_contas_pagar_fcp.sql
@@ -181,13 +144,13 @@ pipeline-bitz/
 │   │   ├── dim_planos_dre.sql
 │   │   └── dim_planos_fcp.sql
 │   │
-│   └── gold/                     # Camada Gold
+│   └── gold/                    # Camada Gold
 │       ├── fact_dfc.sql
 │       ├── fact_dre.sql
 │       ├── fact_fcp.sql
 │       └── dim_centro_custo_dre.sql
 │
-└── utils/                        # Scripts utilitários
+└── utils/                    # Scripts utilitários
     ├── create_catalog_schema.py  # Setup Unity Catalog
     ├── normalizacao_descricao.ipynb
     └── limpeza_volume.ipynb
@@ -263,5 +226,3 @@ pipeline-bitz/
 ---
 
 **Projeto desenvolvido seguindo as melhores práticas de engenharia de dados moderna, com foco em escalabilidade, governança e qualidade.**
-
-
